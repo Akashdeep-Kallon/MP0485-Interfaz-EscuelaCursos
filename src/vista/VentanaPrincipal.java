@@ -108,8 +108,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void openCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCourseActionPerformed
         // TODO add your handling code here:
         String courseName = listCourse.getSelectedValue();
-        
-        if (courseName != null) {
+
+        if (!(courseName == null || courseName.isEmpty())) {
             java.awt.EventQueue.invokeLater(() -> {
                 new VentanaCurso(courseName).setVisible(true);
             });
@@ -120,19 +120,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void removeCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCourseActionPerformed
         // TODO add your handling code here:
         String courseName = listCourse.getSelectedValue();
-        if (courseName != null) {
-            ControladorCursos.removeCourse(courseName);
-            update();
-        }
+        ControladorCursos.removeCourse(courseName);
+        update();
     }//GEN-LAST:event_removeCourseActionPerformed
 
     private void createCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createCourseActionPerformed
         // TODO add your handling code here:
         String courseName = JOptionPane.showInputDialog("Please, enter the course:");
-        if (courseName != null) {
-            ControladorCursos.createCourse(courseName); 
-            update();
-        }
+        ControladorCursos.createCourse(courseName);
+        update();
     }//GEN-LAST:event_createCourseActionPerformed
 
     /**

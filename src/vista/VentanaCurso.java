@@ -243,19 +243,17 @@ public class VentanaCurso extends javax.swing.JFrame {
         String ageText = ageTextField.getText();
         String dni = DNITextField.getText();
 
-        if (name != null && surname != null && !(ageText == null || ageText.isEmpty()) && dni != null) {
-            int age = Integer.parseInt(ageTextField.getText());
-            ControladorAlumnos.addStudent(course, name, surname, age, dni);
-        }
+        ControladorAlumnos.addStudent(course, name, surname, ageText, dni);
+
         update();
     }//GEN-LAST:event_addStudentActionPerformed
 
     private void removeStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStudentActionPerformed
         // TODO add your handling code here:
         String studentLine = listStudent.getSelectedValue();
-        if (studentLine != null) {
-            ControladorAlumnos.removeStudent(course, studentLine);
-        }
+
+        ControladorAlumnos.removeStudent(course, studentLine);
+
         update();
     }//GEN-LAST:event_removeStudentActionPerformed
 
@@ -266,7 +264,7 @@ public class VentanaCurso extends javax.swing.JFrame {
         String[] divisor2 = divisor1[1].split("\\)");
         String dni = divisor2[0];
 
-        if (dni != null) {
+        if (!(dni == null || dni.isEmpty())) {
             String[] studentAtribut = ControladorAlumnos.searchStudent(course, dni);
             java.awt.EventQueue.invokeLater(() -> {
                 new VentanaAlumno(course, studentAtribut[1], studentAtribut[2], studentAtribut[3], studentAtribut[4]).setVisible(true);
@@ -278,7 +276,7 @@ public class VentanaCurso extends javax.swing.JFrame {
     private void searchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStudentActionPerformed
         // TODO add your handling code here:
         String dni = JOptionPane.showInputDialog("Please, enter the Student DNI:");
-        if (dni != null) {
+        if (!(dni == null || dni.isEmpty())) {
             String[] studentAtribut = ControladorAlumnos.searchStudent(course, dni);
             java.awt.EventQueue.invokeLater(() -> {
                 new VentanaAlumno(course, studentAtribut[1], studentAtribut[2], studentAtribut[3], studentAtribut[4]).setVisible(true);

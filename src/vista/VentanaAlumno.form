@@ -116,6 +116,9 @@
     <Component class="javax.swing.JTextField" name="dniText">
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="ageText">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ageTextActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JFormattedTextField(&#xa;    new javax.swing.text.NumberFormatter(&#xa;        new java.text.DecimalFormat(&quot;#0&quot;)&#xa;    )&#xa;)"/>
       </AuxValues>

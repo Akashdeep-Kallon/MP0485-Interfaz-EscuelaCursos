@@ -31,6 +31,7 @@ public class ControladorAlumnos {
 
     public static DefaultListModel<String> updateFile(String course) {
         DefaultListModel<String> modelo = new DefaultListModel<>();
+
         File studentFile = new File(main.RUTA_ARCHIVO + File.separator + course + File.separator + "alumnos.txt");
 
         if (!studentFile.exists()) {
@@ -61,90 +62,98 @@ public class ControladorAlumnos {
         return modelo;
     }
 
-    public static void addStudent(String course, String name, String surname, int age, String dni) {
-        Alumno student = new Alumno(course, name, surname, age, dni);
+    public static void addStudent(String course, String name, String surname, String ageText, String dni) {
+        if (!(name == null || name.isEmpty()) && !(surname == null || surname.isEmpty()) && !(ageText == null || ageText.isEmpty()) && !(dni == null || dni.isEmpty())) {
+            int age = Integer.parseInt(ageText);
+            Alumno student = new Alumno(course, name, surname, age, dni);
 
-        if (!checkDNI(dni, student.toFile())) {
-            try {
-                fw = new FileWriter(student.toFile(), true);
-                bw = new BufferedWriter(fw);
+            if (!checkDNI(dni, student.toFile())) {
+                try {
+                    fw = new FileWriter(student.toFile(), true);
+                    bw = new BufferedWriter(fw);
 
-                bw.write(student.toString() + System.getProperty("line.separator"));
-                bw.flush();
-                fw.close();
-                bw.close();
-            } catch (IOException E) {
-                System.err.println("Error al agregar un alumno en la base de datos.");
+                    bw.write(student.toString() + System.getProperty("line.separator"));
+                    bw.flush();
+                    fw.close();
+                    bw.close();
+                } catch (IOException E) {
+                    System.err.println("Error al agregar un alumno en la base de datos.");
+                }
             }
         }
     }
 
     public static void removeStudent(String course, String studentLine) {
-        File studentFile = new File(main.RUTA_ARCHIVO + File.separator + course + File.separator + "alumnos.txt");
-        String[] studentSeparatorLine = studentLine.split("\\s+");
-        String dni = studentSeparatorLine[2].replace("(", "").replace(")", "");
+        if (!(studentLine == null || studentLine.isEmpty())) {
+            File studentFile = new File(main.RUTA_ARCHIVO + File.separator + course + File.separator + "alumnos.txt");
+            String[] studentSeparatorLine = studentLine.split("\\s+");
+            String dni = studentSeparatorLine[2].replace("(", "").replace(")", "");
 
-        try {
-            fr = new FileReader(studentFile);
-            br = new BufferedReader(fr);
-            while ((read = br.readLine()) != null) {
-                if (!read.contains(dni)) {
-                    registro += read + System.getProperty("line.separator");
+            try {
+                fr = new FileReader(studentFile);
+                br = new BufferedReader(fr);
+                while ((read = br.readLine()) != null) {
+                    if (!read.contains(dni)) {
+                        registro += read + System.getProperty("line.separator");
+                    }
                 }
+                fr.close();
+                br.close();
+            } catch (IOException e) {
+                System.err.println("Error al leer o eliminar el alumno");
             }
-            fr.close();
-            br.close();
-        } catch (IOException e) {
-            System.err.println("Error al leer o eliminar el alumno");
-        }
 
-        try {
-            fw = new FileWriter(studentFile);
-            bw = new BufferedWriter(fw);
-            if (registro != null) {
-                bw.write(registro);
+            try {
+                fw = new FileWriter(studentFile);
+                bw = new BufferedWriter(fw);
+                if (registro != null) {
+                    bw.write(registro);
+                }
+                registro = null;
+                bw.flush();
+                fw.close();
+                bw.close();
+            } catch (IOException e) {
+                System.err.println("Error al subir la lista actulizada de alumnos.");
             }
-            registro = null;
-            bw.flush();
-            fw.close();
-            bw.close();
-        } catch (IOException e) {
-            System.err.println("Error al subir la lista actulizada de alumnos.");
         }
     }
 
-    public static void updateStudent(String course, String name, String surname, int age, String dni, String dniChange) {
+    public static void updateStudent(String course, String name, String surname, String ageField, String dni, String dniChange) {
         File studentFile = new File(main.RUTA_ARCHIVO + File.separator + course + File.separator + "alumnos.txt");
-        Alumno student = new Alumno(course, name, surname, age, dniChange);
+        if (!(name == null || name.isEmpty()) && !(surname == null || surname.isEmpty()) && !(ageField == null || ageField.isEmpty()) && !(dniChange == null || dniChange.isEmpty())) {
+            int age = Integer.parseInt(ageField);
+            Alumno student = new Alumno(course, name, surname, age, dniChange);
 
-        try {
-            fr = new FileReader(studentFile);
-            br = new BufferedReader(fr);
-            while ((read = br.readLine()) != null) {
-                if (!read.contains(dni)) {
-                    registro += read + System.getProperty("line.separator");
-                } else {
-                    registro += student.toString() + System.getProperty("line.separator");
+            try {
+                fr = new FileReader(studentFile);
+                br = new BufferedReader(fr);
+                while ((read = br.readLine()) != null) {
+                    if (!read.contains(dni)) {
+                        registro += read + System.getProperty("line.separator");
+                    } else {
+                        registro += student.toString() + System.getProperty("line.separator");
+                    }
                 }
+                fr.close();
+                br.close();
+            } catch (IOException e) {
+                System.err.println("Error al leer o actualizar el alumno");
             }
-            fr.close();
-            br.close();
-        } catch (IOException e) {
-            System.err.println("Error al leer o actualizar el alumno");
-        }
 
-        try {
-            fw = new FileWriter(studentFile);
-            bw = new BufferedWriter(fw);
-            if (registro != null) {
-                bw.write(registro);
+            try {
+                fw = new FileWriter(studentFile);
+                bw = new BufferedWriter(fw);
+                if (registro != null) {
+                    bw.write(registro);
+                }
+                registro = null;
+                bw.flush();
+                fw.close();
+                bw.close();
+            } catch (IOException e) {
+                System.err.println("Error al subir la lista actulizada de alumnos al actualizar.");
             }
-            registro = null;
-            bw.flush();
-            fw.close();
-            bw.close();
-        } catch (IOException e) {
-            System.err.println("Error al subir la lista actulizada de alumnos al actualizar.");
         }
     }
 

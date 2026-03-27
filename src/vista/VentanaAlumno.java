@@ -73,6 +73,12 @@ public class VentanaAlumno extends javax.swing.JFrame {
             }
         });
 
+        ageText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ageTextActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,15 +137,17 @@ public class VentanaAlumno extends javax.swing.JFrame {
         String ageField = ageText.getText();
         String dniChange = dniText.getText();
 
-        if (name != null && surname != null && !(ageText == null || ageField.isEmpty()) && dniChange != null) {
-            int age = Integer.parseInt(ageText.getText());
-            ControladorAlumnos.updateStudent(course, name, surname, age, dni, dniChange);
-        }
+        ControladorAlumnos.updateStudent(course, name, surname, ageField, dni, dniChange);
+        
         java.awt.EventQueue.invokeLater(() -> {
             new VentanaCurso(course).setVisible(true);
         });
         dispose();
     }//GEN-LAST:event_leaveActionPerformed
+
+    private void ageTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ageTextActionPerformed
 
     /**
      * @param args the command line arguments

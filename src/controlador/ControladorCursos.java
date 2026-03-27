@@ -25,27 +25,31 @@ public class ControladorCursos {
     }
 
     public static void createCourse(String courseName) {
-        try {
-            String rutaCourse = main.RUTA_ARCHIVO + File.separator + courseName;
-            File courseFile = new File(rutaCourse);
-            if (!courseFile.exists()) {
-                courseFile.mkdir();
-                main.alumnos = new File(rutaCourse + File.separator + "alumnos.txt");
-                main.alumnos.createNewFile();
+        if (!(courseName == null || courseName.isEmpty())) {
+            try {
+                String rutaCourse = main.RUTA_ARCHIVO + File.separator + courseName;
+                File courseFile = new File(rutaCourse);
+                if (!courseFile.exists()) {
+                    courseFile.mkdir();
+                    main.alumnos = new File(rutaCourse + File.separator + "alumnos.txt");
+                    main.alumnos.createNewFile();
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el curso.");
             }
-        } catch (IOException e) {
-            System.err.println("Error al crear el curso.");
         }
     }
 
     public static void removeCourse(String courseName) {
-        String rutaCourse = main.RUTA_ARCHIVO + File.separator + courseName;
-        File courseFile = new File(rutaCourse);
-        main.alumnos = new File(rutaCourse + File.separator + "alumnos.txt");
-        if (courseFile.exists()) {
-            main.alumnos.delete();
-            
-            courseFile.delete();
+        if (!(courseName == null || courseName.isEmpty())) {
+            String rutaCourse = main.RUTA_ARCHIVO + File.separator + courseName;
+            File courseFile = new File(rutaCourse);
+            main.alumnos = new File(rutaCourse + File.separator + "alumnos.txt");
+            if (courseFile.exists()) {
+                main.alumnos.delete();
+
+                courseFile.delete();
+            }
         }
     }
 
