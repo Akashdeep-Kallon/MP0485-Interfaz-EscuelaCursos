@@ -122,7 +122,7 @@ public class VentanaCurso extends javax.swing.JFrame {
             }
         });
 
-        labelCount.setText("Number of Students: " + ControladorAlumnos.countStudent(course));
+        labelCount.setText("Numbers of Students: " + ControladorAlumnos.countStudent(course));
 
         searchStudent.setText("Search Student");
         searchStudent.addActionListener(new java.awt.event.ActionListener() {
@@ -259,10 +259,14 @@ public class VentanaCurso extends javax.swing.JFrame {
 
     private void showStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStudentActionPerformed
         // TODO add your handling code here:
-        String toLineStudent = listStudent.getSelectedValue();
-        String[] divisor1 = toLineStudent.split("\\(");
-        String[] divisor2 = divisor1[1].split("\\)");
-        String dni = divisor2[0];
+        String dni = null;
+
+        if (!(listStudent.getSelectedValue() == null || listStudent.getSelectedValue().isEmpty())) {
+            String toLineStudent = listStudent.getSelectedValue();
+            String[] divisor1 = toLineStudent.split("\\(");
+            String[] divisor2 = divisor1[1].split("\\)");
+            dni = divisor2[0];
+        }
 
         if (!(dni == null || dni.isEmpty())) {
             String[] studentAtribut = ControladorAlumnos.searchStudent(course, dni);
@@ -275,13 +279,16 @@ public class VentanaCurso extends javax.swing.JFrame {
 
     private void searchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStudentActionPerformed
         // TODO add your handling code here:
+        String[] studentAtribut;
         String dni = JOptionPane.showInputDialog("Please, enter the Student DNI:");
         if (!(dni == null || dni.isEmpty())) {
-            String[] studentAtribut = ControladorAlumnos.searchStudent(course, dni);
-            java.awt.EventQueue.invokeLater(() -> {
-                new VentanaAlumno(course, studentAtribut[1], studentAtribut[2], studentAtribut[3], studentAtribut[4]).setVisible(true);
-            });
-            dispose();
+            studentAtribut = ControladorAlumnos.searchStudent(course, dni);
+            if (studentAtribut != null) {
+                java.awt.EventQueue.invokeLater(() -> {
+                    new VentanaAlumno(course, studentAtribut[1], studentAtribut[2], studentAtribut[3], studentAtribut[4]).setVisible(true);
+                });
+                dispose();
+            }
         }
     }//GEN-LAST:event_searchStudentActionPerformed
 

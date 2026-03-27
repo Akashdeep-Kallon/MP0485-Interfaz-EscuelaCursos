@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import main.main;
 import modelo.Alumno;
 
@@ -79,6 +80,8 @@ public class ControladorAlumnos {
                 } catch (IOException E) {
                     System.err.println("Error al agregar un alumno en la base de datos.");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "There is already a student with this ID.");
             }
         }
     }
@@ -199,18 +202,22 @@ public class ControladorAlumnos {
     public static String[] searchStudent(String course, String dni) {
         File studentFile = new File(main.RUTA_ARCHIVO + File.separator + course + File.separator + "alumnos.txt");
         String[] studentAtribut = null;
-        try {
-            fr = new FileReader(studentFile);
-            br = new BufferedReader(fr);
-            while ((read = br.readLine()) != null) {
-                if (read.contains(dni)) {
-                    studentAtribut = read.split(";");
+        if (checkDNI(dni, studentFile)) {
+            try {
+                fr = new FileReader(studentFile);
+                br = new BufferedReader(fr);
+                while ((read = br.readLine()) != null) {
+                    if (read.contains(dni)) {
+                        studentAtribut = read.split(";");
+                    }
                 }
+                fr.close();
+                br.close();
+            } catch (IOException e) {
+                System.err.println("Error al intentar mostrar el alumno.");
             }
-            fr.close();
-            br.close();
-        } catch (IOException e) {
-            System.err.println("Error al intentar mostrar el alumno.");
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no student with this ID.");
         }
         return studentAtribut;
     }

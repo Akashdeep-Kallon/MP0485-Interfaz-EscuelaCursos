@@ -7,6 +7,7 @@ package controlador;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import main.main;
 
 /**
@@ -33,6 +34,8 @@ public class ControladorCursos {
                     courseFile.mkdir();
                     main.alumnos = new File(rutaCourse + File.separator + "alumnos.txt");
                     main.alumnos.createNewFile();
+                } else {
+                    JOptionPane.showMessageDialog(null, "A course with this name already exists.");
                 }
             } catch (IOException e) {
                 System.err.println("Error al crear el curso.");
@@ -47,7 +50,6 @@ public class ControladorCursos {
             main.alumnos = new File(rutaCourse + File.separator + "alumnos.txt");
             if (courseFile.exists()) {
                 main.alumnos.delete();
-
                 courseFile.delete();
             }
         }
