@@ -135,7 +135,9 @@ public class VentanaAlumno extends javax.swing.JFrame {
             int age = Integer.parseInt(ageText.getText());
             ControladorAlumnos.updateStudent(course, name, surname, age, dni, dniChange);
         }
-
+        java.awt.EventQueue.invokeLater(() -> {
+            new VentanaCurso(course).setVisible(true);
+        });
         dispose();
     }//GEN-LAST:event_leaveActionPerformed
 

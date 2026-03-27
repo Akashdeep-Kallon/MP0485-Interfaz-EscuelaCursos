@@ -32,7 +32,7 @@ public class VentanaCurso extends javax.swing.JFrame {
     public void setListStudent(JList<String> listStudent) {
         this.listStudent = listStudent;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -271,6 +271,7 @@ public class VentanaCurso extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(() -> {
                 new VentanaAlumno(course, studentAtribut[1], studentAtribut[2], studentAtribut[3], studentAtribut[4]).setVisible(true);
             });
+            dispose();
         }
     }//GEN-LAST:event_showStudentActionPerformed
 
@@ -282,6 +283,7 @@ public class VentanaCurso extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(() -> {
                 new VentanaAlumno(course, studentAtribut[1], studentAtribut[2], studentAtribut[3], studentAtribut[4]).setVisible(true);
             });
+            dispose();
         }
     }//GEN-LAST:event_searchStudentActionPerformed
 
